@@ -31,7 +31,7 @@ export function Navbar() {
           href="/"
           className="text-lg font-bold tracking-tight text-foreground hover:text-accent transition-colors"
         >
-          Portfolio
+          Mahmoud Abdelnaby
         </Link>
 
         {/* Desktop nav */}
@@ -40,11 +40,10 @@ export function Navbar() {
             <Link
               key={item.href}
               href={item.href}
-              className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
-                isActive(item.href)
-                  ? "text-accent bg-accent/10"
-                  : "text-foreground-secondary hover:text-foreground hover:bg-card-hover"
-              }`}
+              className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${isActive(item.href)
+                ? "text-accent bg-accent/10"
+                : "text-foreground-secondary hover:text-foreground hover:bg-card-hover"
+                }`}
             >
               {item.label}
             </Link>
@@ -80,11 +79,10 @@ export function Navbar() {
                 key={item.href}
                 href={item.href}
                 onClick={() => setMobileOpen(false)}
-                className={`px-3 py-2.5 rounded-lg text-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
-                  isActive(item.href)
-                    ? "text-accent bg-accent/10"
-                    : "text-foreground-secondary hover:text-foreground hover:bg-card-hover"
-                }`}
+                className={`px-3 py-2.5 rounded-lg text-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${isActive(item.href)
+                  ? "text-accent bg-accent/10"
+                  : "text-foreground-secondary hover:text-foreground hover:bg-card-hover"
+                  }`}
               >
                 {item.label}
               </Link>
