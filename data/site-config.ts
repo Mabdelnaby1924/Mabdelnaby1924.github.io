@@ -19,7 +19,7 @@ export const siteConfig = {
    * Used for sitemap, Open Graph, and canonical URLs.
    * Set this to your GitHub Pages URL or custom domain.
    */
-  url: "https://yourusername.github.io/portfolio2",
+  url: "https://Mabdelnaby1924.github.io",
 
   /** Path prefix if deployed under a subpath (e.g., "/portfolio2"). Leave empty for root domain. */
   basePath: "",
