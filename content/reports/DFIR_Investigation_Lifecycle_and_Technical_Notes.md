@@ -1,5 +1,3 @@
-
-```yaml
 ---
 title: "DFIR Investigation Lifecycle & Technical Notes"
 description: "A concise technical reference covering the DFIR investigation lifecycle, evidence acquisition, live and postmortem analysis, and professional forensic reporting."
@@ -26,7 +24,6 @@ stack:
 pdf: "/reports/DFIR_Investigation_Lifecycle_&_Technical_Notes.pdf"
 category: "DFIR"
 ---
-```
 
 Generally, **forensic science** is the scientific method of gathering and examining data about the past to extract useful information related to the case under investigation.
 
@@ -50,7 +47,6 @@ One of the definitions of digital forensics is **Rodney McKemmish's**, which sta
 
 ## Identification
 
----
 The investigator or the analyst must understand the circumstances of the incident and collect the data that is important to the investigation.
 They need to understand:
 
@@ -63,14 +59,12 @@ The investigator first understands the environment to ensure important evidence 
 
 ## Acquisition
 
----
-
 The Acquisition phase is the process of collecting and preserving digital evidence in a forensically sound manner while maintaining its integrity.
 Evidence must be acquired using trusted methods that prevent alteration and ensure it remains admissible for further analysis.
 
-#### Acquisition Methods
+### Acquisition Methods
 
-##### Scenario
+#### Scenario
 
 ![scenario](/images/reports/dfir_lifecycle/acquisition_scanrio.png)
 
@@ -83,7 +77,7 @@ The investigation therefore required **two parallel acquisition approaches**:
 - **On-Premises Acquisition** for systems physically accessible inside the data center.
 - **Remote Acquisition** for endpoints and servers that could not be reached physically.
 
-##### On-Prem
+#### On-Prem
 
 Responders were dispatched to the primary data center because several critical Windows servers were physically accessible. Their objective was to acquire RAM and forensic disk images while preserving evidence integrity before the systems were powered down.
 
@@ -92,7 +86,7 @@ Responders were dispatched to the primary data center because several critical W
 
 **Jump Bag** = FREDL + Ultra Kit
 
-###### FRED-L
+##### FRED-L
 
 FREDL is short for Forensic Recovery of Evidence Device Laptop.
 
@@ -100,7 +94,7 @@ FRED-L is a portable forensic workstation designed to perform digital evidence a
 
 > **Note:** FRED-L is not a forensic tool itself; it is a specialized forensic platform that integrates hardware and software to support evidence acquisition, preservation, and forensic analysis while maintaining forensic best practices.
 
-![[Pasted image 20260805020713.png]]
+![fred_l](/images/reports/dfir_lifecycle/fred_l.png)
 
 **Components**:
 
@@ -110,7 +104,7 @@ FRED-L is a portable forensic workstation designed to perform digital evidence a
 
 For more details:  [Digital Intelligence](https://digitalintelligence.com/products/fred_l)
 
-###### Ultrakit
+##### Ultrakit
 
 The physical hardware complement to FREDL, everything needed to connect to and safely extract data from whatever storage media you find on-site.
 
@@ -168,7 +162,7 @@ In a typical on-premises acquisition, a **write blocker** first protects the evi
 - Chain of Custody forms
 - Incident handling procedure
 
-##### Remotely
+#### Remotely
 
 At the same time, several affected systems were located in remote branch offices where physical access was unavailable. To avoid delaying the investigation, responders initiated remote live acquisition to collect volatile evidence before full forensic imaging could be scheduled.
 
@@ -181,20 +175,7 @@ In DFIR, responders commonly use these tools during **remote live acquisition** 
 
 Among the suite, **PsExec** is one of the most widely used utilities because it enables responders to remotely execute commands and forensic collection scripts under administrative privileges.
 
-**How `PsExec` Works**
-
-```mathematica
-DFIR Workstation
-        │
-        │ PsExec
-        ▼
-Remote Windows Host
-        │
-        ├── Creates PSEXESVC
-        ├── Executes command
-        ├── Returns output
-        └── Removes service
-```
+![psexec](/images/reports/dfir_lifecycle/psexec.png)
 
 - Before executing the command, `PsExec` unpacks this hidden resource in the administrative sphere of the remote computer at `Admin$` (C:\Windows) file `Admin$\system32\psexecsvc.exe`
 - After copying this, PsExec installs and runs the service using the API functions of the Windows management services.
@@ -225,7 +206,7 @@ The collected artifacts can then be redirected to files and transferred for late
 
 **there are some issues/problems/limitations**
 
-###### Observer Effect
+##### Observer Effect
 
 The Observer Effect refers to the unavoidable changes made to a live system while collecting forensic evidence. Simply executing commands or forensic utilities may modify memory, create processes, update logs, or alter timestamps, resulting in changes to the original system state.
 
@@ -235,7 +216,7 @@ So, How to limit this effect:
 - Record every command and action performed during acquisition in the Final Report.
 - Acquire the most volatile evidence first (Order of Volatility).
 
-###### Locked File Access
+##### Locked File Access
 
 Some critical forensic artifacts are locked by the Windows operating system while it is running. Files such as Registry hives, the MFT, and other system files cannot be copied using standard file copy operations because they are actively in use.
 
@@ -277,7 +258,6 @@ winexe -U [Domain/]User%Password //host command
 
 ## Analysis
 
----
 The Analysis phase is the process of examining and correlating the collected digital evidence to reconstruct the incident, determine what occurred, identify the attacker's actions and techniques, and answer key investigative questions such as **how**, **when**, and **what impact** the incident had. The analyst evaluates all available evidence to build an accurate timeline and reach evidence-based conclusions.
 
 ### Analysis Approaches
@@ -305,13 +285,13 @@ where the responder conducts the live analysis on the powered on and accessible 
 - Volatile Evidence
 - Non-Volatile Evidence
 
-#### Volatile Evidence
+### Volatile Evidence
 
 Under the principle of “order of Volatility”, you must first collect information that is classified as Volatile Data which will be irretrievably lost in case the computer is powered off.
 
 Typically, this category includes the following data:
 
-##### System Time
+#### System Time
 
 to establish a reliable temporal reference for correlating events and building the incident timeline.
 
@@ -324,7 +304,7 @@ systeminfo | find "Boot Time" >>% COMPUTERNAME% \ systime.txt
 - `date /t` / `time /t` : retrieves the current system date and time.
 - `systeminfo` : provides system information, including the system boot time.
 
-##### Network State
+#### Network State
 
 to reveals active and recent network activity that may indicate Command & Control, lateral movement, or suspicious external communication.
 
@@ -345,7 +325,7 @@ promqry>%COMPUTERNAME%\NSniff.txt
 - `netstat -rn` : displays the **routing table**.
 - `ipconfig /all` : displays detailed network **interface configuration**.\
 
-##### Logged on users and active sessions
+#### Logged on users and active sessions
 
 To identifies accounts currently or recently active on the system and helps determine whether unauthorized access or account abuse occurred.
 
@@ -358,7 +338,7 @@ logonsessions -p >> %COMPUTERNAME%\LoggedOnUsers.txt
 - `psloggedon` : identifies **locally** and **remotely** logged-on **users**.
 - `logonsessions` : displays active **logon sessions** and **associated processes**.
 
-##### Loaded Drivers
+#### Loaded Drivers
 
 To identifies kernel-level components currently loaded into memory, which may reveal suspicious or malicious drivers.
 
@@ -368,7 +348,7 @@ drivers.exe>%COMPUTERNAME%\drivers.txt
 
 - the **WDK `drivers.exe`** utility **lists loaded** Windows **drivers** and their associated information.
 
-##### Running Services
+#### Running Services
 
 to identify malicious or unauthorized services that may be used for execution or persistence.
 
@@ -378,7 +358,7 @@ psservice>%COMPUTERNAME% \ trasklst.txt
 
 - `psservice`: **displays** and **manages** Windows **services**, including their current state.
 
-##### Running Processes, DLLs & Handles
+#### Running Processes, DLLs & Handles
 
 to provide visibility into active execution, loaded modules, and resources accessed by processes, helping identify suspicious processes, DLL injection, or abnormal activity.
 
@@ -400,7 +380,7 @@ handle -a>%COMPUTERNAME%\lsthandles.txt
 - `listdlls` : lists DLLs loaded by running processes.
 - `handle -a` : displays handles opened by processes.
 
-##### Persistence & Lateral Movement Check
+#### Persistence & Lateral Movement Check
 
 Identifies mechanisms that may allow an attacker to survive reboots or move between systems.
 
@@ -415,11 +395,11 @@ schtasks / query>%COMPUTERNAME% \ schtask.txt
 - `autorunsc` utility: displays a list of **executables that run at system startup** and when users log on.
 - Two other commands (`at` and `schtasks`) display a list of commands that run in the schedule.
 
-#### Non-Volatile Evidence
+### Non-Volatile Evidence
 
 Non-volatile data is digital evidence that remains stored after a system is powered off. Unlike volatile data, it is not lost when power is removed, allowing investigators to perform a detailed **postmortem analysis** using forensic images acquired during the acquisition phase. This evidence helps reconstruct the incident timeline, identify attacker activity, and determine the scope and impact of the compromise.
 
-##### Evidence Sources for Postmortem Analysis
+#### Evidence Sources for Postmortem Analysis
 
 Non-volatile analysis may be performed on evidence obtained from:
 
@@ -456,8 +436,6 @@ The analyst correlates these artifacts to reconstruct:
 
 ## Report
 
----
-
 A professional DFIR report should clearly document the investigation process, the evidence examined, the findings reached, and the reasoning behind each conclusion, allowing other analysts to understand, verify, and reproduce the investigation where necessary.
 
 #### How to document a professional report
@@ -480,8 +458,6 @@ A professional DFIR report should clearly document the investigation process, th
   - What remains unknown?
 
 ## References
-
----
 
 #### Books
 
