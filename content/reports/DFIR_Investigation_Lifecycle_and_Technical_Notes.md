@@ -136,7 +136,8 @@ This protects the evidence from accidental modification, such as metadata update
 - **Read commands** (e.g., `READ DMA`, `READ SECTOR`) are forwarded normally.
 - **Write or modify commands** (e.g., `WRITE`, `FORMAT`, `TRIM`, metadata updates) are intercepted and blocked before reaching the evidence drive.
 
-> [!Note] How Write Blocker blocks any modifications commands during acquision
+> How Write Blocker blocks any modifications commands during acquision?
+>
 > During forensic acquisition, the forensic workstation reads disk sectors without modifying the evidence. However, a typical operating system may attempt to update file system metadata, such as access timestamps, journal records, or mount information, as a result of accessing the drive.
 >
 > A write blocker intercepts these write commands before they reach the evidence disk, ensuring that only read operations are performed and the original media remains unchanged.
@@ -461,7 +462,7 @@ A professional DFIR report should clearly document the investigation process, th
 
 #### Books
 
-**Shaaban, A., & Sapronov, K. (2016). _Practical Windows Forensics_
+**Shaaban, A., & Sapronov, K. (2016). _Practical Windows Forensics_**
 
 - Chapter 1 — _The Foundations and Principles of Digital Forensics_
 - Chapter 2 — _Incident Response and Live Analysis_
