@@ -467,8 +467,6 @@ A professional DFIR report should clearly document the investigation process, th
 - Chapter 1 — _The Foundations and Principles of Digital Forensics_
 - Chapter 2 — _Incident Response and Live Analysis_
 
-Ayman Shaaban
-Konstantin Sapronov
 
 #### Standards & Guidelines
 
