@@ -114,12 +114,12 @@ export function Hero() {
               View Projects
             </Link>
             <a
-              href="/resume/resume.pdf"
+              href="/resume/Mahmoud_Abdelnaby_CV.pdf"
               download
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-border text-foreground text-sm font-medium hover:bg-card-hover transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
               <Download size={16} />
-              Download Resume
+              Download CV
             </a>
           </div>
 

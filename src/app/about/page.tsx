@@ -159,16 +159,16 @@ export default function AboutPage() {
       <Section icon={<Download size={20} />} title="Resume">
         <div className="p-6 rounded-xl border border-card-border bg-card text-center">
           <p className="text-sm text-foreground-secondary mb-4">
-            Download my resume to learn more about my experience and
+            Download my CV to learn more about my experience and
             qualifications.
           </p>
           <a
-            href="/resume/Mahmoud_Abdelnaby_Resume.pdf"
+            href="/resume/Mahmoud_Abdelnaby_CV.pdf"
             download
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-accent text-accent-foreground text-sm font-medium hover:bg-accent-hover transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             <Download size={16} />
-            Download Resume (PDF)
+            Download CV (PDF)
           </a>
         </div>
       </Section>
