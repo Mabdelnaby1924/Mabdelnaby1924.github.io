@@ -7,8 +7,13 @@ import { MarkdownRenderer } from "@/components/MarkdownRenderer";
 import { Calendar, Clock, Download } from "lucide-react";
 import { siteConfig } from "../../../../data/site-config";
 
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   const slugs = getAllSlugs("reports");
+  if (slugs.length === 0) {
+    return [{ slug: "_empty" }];
+  }
   return slugs.map((slug) => ({ slug }));
 }
 
