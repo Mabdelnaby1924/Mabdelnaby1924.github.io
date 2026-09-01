@@ -10,7 +10,7 @@ export const certifications: Certification[] = [
   // Add your certifications here. Example:
   {
     name: "CCNA",
-    issuer: "with Eng. Ahmed Nabil",
+    issuer: "",
     date: "2023",
     // credentialUrl: "",
   },
