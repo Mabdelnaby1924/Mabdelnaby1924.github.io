@@ -8,11 +8,11 @@ export interface TimelineEntry {
 
 export const timeline: TimelineEntry[] = [
   // Add your education and experience entries here. Example:
-  // {
-  //   title: "Bachelor of Computer Science",
-  //   organization: "University Name",
-  //   period: "2020 - 2024",
-  //   description: "Focus on cybersecurity and systems.",
-  //   type: "education",
-  // },
+  {
+    title: "B.Sc. in Computer and Systems Engineering",
+    organization: "Zagazig University",
+    period: "2020 - 2026",
+    description: "Information Security and Systems Engineering.",
+    type: "education",
+  },
 ];

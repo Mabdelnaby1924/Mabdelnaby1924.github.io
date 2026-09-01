@@ -34,10 +34,18 @@ export default function AboutPage() {
       <h1 className="text-3xl font-bold text-foreground mb-10">About</h1>
 
       {/* Professional Summary */}
-      <Section icon={<User size={20} />} title="Professional Summary">
-        <p className="text-foreground-secondary leading-relaxed">
-          {profile.summary}
-        </p>
+      <Section icon={<User size={22} />} title="Whoami">
+        {Array.isArray(profile.summary) ? (
+          <div className="space-y-4 text-foreground-secondary leading-relaxed">
+            {profile.summary.map((paragraph, index) => (
+              <p key={index}>{paragraph}</p>
+            ))}
+          </div>
+        ) : (
+          <p className="text-foreground-secondary leading-relaxed">
+            {profile.summary}
+          </p>
+        )}
       </Section>
 
       {/* Experience */}
@@ -56,7 +64,7 @@ export default function AboutPage() {
 
       {/* Certifications */}
       {certifications.length > 0 && (
-        <Section icon={<Award size={20} />} title="Certifications">
+        <Section icon={<Award size={20} />} title="Certifications & Courses">
           <div className="space-y-3">
             {certifications.map((cert) => (
               <div
