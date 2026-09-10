@@ -36,6 +36,14 @@ export async function generateMetadata({
       type: "article",
       url: `${siteConfig.url}/reports/${slug}`,
       tags,
+      images: [
+        {
+          url: `${siteConfig.url}${report.frontmatter.thumbnail}`,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
     },
     twitter: {
       card: "summary",
