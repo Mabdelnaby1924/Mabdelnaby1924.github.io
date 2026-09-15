@@ -39,6 +39,18 @@ export const certifications: Certification[] = [
     credentialUrl: "https://drive.google.com/file/d/1KOHDvrha-F7NRrdM4pOxEzvT0kbpdl4d/view?usp=sharing",
   },
   {
+    name: "SANS - SEC401",
+    issuer: "Self-study",
+    date: "",
+    // credentialUrl: "",
+  },
+  {
+    name: "SANS - SEC450",
+    issuer: "Self-study",
+    date: "",
+    // credentialUrl: "",
+  },
+  {
     name: "SOC training labs",
     issuer: "SheftZero Training Platform",
     date: "2026",
