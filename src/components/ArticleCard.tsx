@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Tag } from "./Tag";
 import { Calendar, Clock } from "lucide-react";
 import type { ContentFrontmatter } from "@/lib/content";
@@ -22,6 +23,16 @@ export function ArticleCard({ slug, frontmatter }: ArticleCardProps) {
       href={`/articles/${slug}`}
       className="group block rounded-xl border border-card-border bg-card p-5 hover:border-accent/30 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
     >
+      {frontmatter.thumbnail && (
+        <div className="relative w-full h-48 mb-4 overflow-hidden rounded-lg">
+          <Image
+            src={frontmatter.thumbnail}
+            alt={frontmatter.title}
+            fill
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+        </div>
+      )}
       <div className="flex items-center gap-3 text-xs text-foreground-muted mb-3">
         {formattedDate && (
           <span className="inline-flex items-center gap-1">

@@ -1,5 +1,5 @@
 ---
-title: "Investigating Windows Threats Using Event Logs - Effective Threat Investigation for SOC Analysts (Part 2) Notes"
+title: "Investigating Windows Threats Using Event Logs - Effective Threat Investigation for SOC Analysts Book (Part 2) Notes"
 description: "A practical SOC and DFIR reference covering Windows Event Logs, account activity, process execution, PowerShell, persistence, and lateral movement investigation."
 date: "2026-07-12"
 tags:
@@ -15,7 +15,7 @@ tags:
   - Lateral Movement
   - Incident Response
   - Detection Engineering
-thumbnail: "/images/reports/windows-investigation.png"
+# thumbnail: "/images/reports/windows-investigation.png"
 published: true
 readingTime: "30 min"
 github: ""
@@ -306,7 +306,7 @@ A methodology that allows security analysts to profile account behaviors, identi
 
 - **Logon Type**:
   A technical numeric identifier that specifies the exact authentication method used to access the machine (e.g., local keyboard usage, remote desktop connection, or accessing network file shares).
-  ![image_1](/images/articles/windows_investigation/Pasted image 20260518081456.png)
+  ![image_1](</images/articles/windows_investigation/Pasted image 20260518081456.png>)
 
 - **Key Fields: Account Name, Domain, Source IP**:
   Explicit metadata fields within the logon event structure used to determine exactly who logged in, whether they used a local or domain-level profile, and the network address of the system originating the connection request.
@@ -325,16 +325,16 @@ Highly targeted tracking focused on successful authentications made by sensitive
 ##### Failed Logins (Event ID 4625)
 
 Security tracking generated for every authentication failure, serving as a primary indicator for analysts evaluating password cracking or privilege escalation attempts.
-![image_2](/images/articles/windows_investigation/Pasted image 20260518083514.png)
+![image_2](</images/articles/windows_investigation/Pasted image 20260518083514.png>)
 
 - **Failure Information: Status and Sub Status**:
   Distinct textual explanations and hexadecimal codes that deliver the precise technical reason a logon request failed, such as a mismatched password or a non-existent account.
-  ![image_3](/images/articles/windows_investigation/Pasted image 20260518081651.png)
+  ![image_3](</images/articles/windows_investigation/Pasted image 20260518081651.png>)
 
 ##### Logon Sessions
 
 Interactive session tracking used by security analysts to determine how long an authenticated user account remained continuously active on an endpoint.
-![image_4](/images/articles/windows_investigation/Pasted image 20260518084228.png)
+![image_4](</images/articles/windows_investigation/Pasted image 20260518084228.png>)
 
 - **Logon ID (Unique session identifier)**:
   A temporary, unique session ID generated for every logon instance that allows security analysts to bind specific endpoint events (like executed processes or accessed files) to a distinct authentication window.
@@ -350,7 +350,7 @@ Interactive session tracking used by security analysts to determine how long an 
 
 A protective operating system containment mechanism that locks a user profile for a designated timeframe after it exceeds a threshold of authentication failures defined by the organization's security policy.
 
-![image_5](/images/articles/windows_investigation/Pasted image 20260518083423.png)
+![image_5](</images/articles/windows_investigation/Pasted image 20260518083423.png>)
 
 ---
 
@@ -365,7 +365,7 @@ Audits credential validation results processed specifically over the NTLM authen
 - ##### Event ID 4776
 
   records both successful and failed attempts regarding credentials validation when the NTLM protocol is used.
-![image_6](/images/articles/windows_investigation/Pasted image 20260518083003.png)
+![image_6](</images/articles/windows_investigation/Pasted image 20260518083003.png>)
 
 ##### Kerberos Protocol
 
@@ -382,9 +382,9 @@ Audits credential validation actions occurring over the Kerberos authentication 
 - ##### Event ID 4771
 
   records pre-authentication failures, meaning that the DC won’t grant TGT or Ticket Granting Service (TGS) tickets
-![image_7](/images/articles/windows_investigation/Pasted image 20260518081901.png)
+![image_7](</images/articles/windows_investigation/Pasted image 20260518081901.png>)
 
-![image_8](/images/articles/windows_investigation/Pasted image 20260518081847.png)
+![image_8](</images/articles/windows_investigation/Pasted image 20260518081847.png>)
 
 ### 4. Account and Group Management
 
@@ -395,15 +395,15 @@ Security logs that map administrative structural changes within the operating sy
 Tracking the operational lifecycle of user profiles on a system, auditing modifications such as
 new user account creations, password reset requests, account enabling/disabling, and profile deletions.
 
-![image_9](/images/articles/windows_investigation/Pasted image 20260518082020.png)
+![image_9](</images/articles/windows_investigation/Pasted image 20260518082020.png>)
 
-![image_10](/images/articles/windows_investigation/Pasted image 20260518082040.png)
+![image_10](</images/articles/windows_investigation/Pasted image 20260518082040.png>)
 
 ##### Security Group Management
 
 Monitoring structural changes to directory security groups, tracking new group creations or deletions, and logging the addition or removal of user accounts to identify how privileges are being delegated.
 
-![image_11](/images/articles/windows_investigation/Pasted image 20260518082108.png)
+![image_11](</images/articles/windows_investigation/Pasted image 20260518082108.png>)
 
 | **Event ID** | **Event Name**                                               |
 | ------------ | ------------------------------------------------------------ |
@@ -414,7 +414,7 @@ Monitoring structural changes to directory security groups, tracking new group c
 | 4756         | A member was added to a security-enabled universal group     |
 | 4757         | A member was removed from a security-enabled universal group |
 
-![image_12](/images/articles/windows_investigation/Pasted image 20260518082530.png)
+![image_12](</images/articles/windows_investigation/Pasted image 20260518082530.png>)
 
 ## CH_5 Investigating Suspicious Process Execution using Windows Event Logs
 
@@ -433,7 +433,7 @@ main topics of this chapter:
 
 #### Process Attributes
 
-![image_13](/images/articles/windows_investigation/Pasted image 20260520073559.png)
+![image_13](</images/articles/windows_investigation/Pasted image 20260520073559.png>)
 
 #### process Types
 
@@ -492,7 +492,7 @@ Non-standard processes are processes that are not developed by Microsoft and do 
 
 records every process creation activity
 
-![image_14](/images/articles/windows_investigation/Pasted image 20260520081110.png)
+![image_14](</images/articles/windows_investigation/Pasted image 20260520081110.png>)
 
 ##### Token Elevation Type
 
@@ -510,7 +510,7 @@ Refers to the process integrity level that is used by Mandatory Integrity Contro
 
 For instance, a process with a low integrity level cannot write to an object with a medium integrity level. As per Microsoft, the following table describes all available process integrity values for the Mandatory Label field.
 
-![image_15](/images/articles/windows_investigation/Pasted image 20260520082417.png)
+![image_15](</images/articles/windows_investigation/Pasted image 20260520082417.png>)
 
 ##### Process Command Line
 
@@ -524,13 +524,13 @@ Refers to the newly created process’s command-line argument.
 
 - Within Target Subject,
   If the owner of the newly created process is same as the user who started the process (same details as in the Creator Subject section), then the fields in this section will be empty
- ![image_16](/images/articles/windows_investigation/Pasted image 20260520081252.png)
+ ![image_16](</images/articles/windows_investigation/Pasted image 20260520081252.png>)
 
 #### Event ID 4689
 
 records every process exit activity
 
-![image_17](/images/articles/windows_investigation/Pasted image 20260520082837.png)
+![image_17](</images/articles/windows_investigation/Pasted image 20260520082837.png>)
 
 ### Investigating suspicious process executions
 
@@ -561,7 +561,7 @@ for example:
 
 - a weaponized Microsoft Office document spawn a child process executing suspicious action.
 - injecting malicious code into a legitimate Windows process such as the `svchost.exe` or `explorer.exe` process to enforce the legitimate process to execute the malicious code and perform their malicious intents and actions.
-  ![image_18](/images/articles/windows_investigation/Pasted image 20260520085304.png)
+  ![image_18](</images/articles/windows_investigation/Pasted image 20260520085304.png>)
 
 #### Suspicious process paths
 
@@ -596,13 +596,13 @@ Also, it is important to note that during investigations, you may observe a mali
 
 - it logs the executed modules and cmdlets
 
-![image_19](/images/articles/windows_investigation/Pasted image 20260520134823.png)
+![image_19](</images/articles/windows_investigation/Pasted image 20260520134823.png>)
 
 #### Event ID 800
 
 records any PowerShell command executions made through the PowerShell console, in a log file named Windows PowerShell.
 
-![image_20](/images/articles/windows_investigation/Pasted image 20260520135031.png)
+![image_20](</images/articles/windows_investigation/Pasted image 20260520135031.png>)
 
 ### Two additional logging features for monitoring PowerShell activities
 
@@ -670,19 +670,19 @@ HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run
 HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\RunOnce
 ```
 
-![image_21](/images/articles/windows_investigation/Pasted image 20260522060157.png)
+![image_21](</images/articles/windows_investigation/Pasted image 20260522060157.png>)
 a new registry value Malware was created under one of the registry run keys, referencing the C:\Windows\Temp\Malware.exe executable path on the disk, to be executed upon user login.
 
 ##### Events to detect suspicious access and additions or modifications to registry keys
 
-![image_22](/images/articles/windows_investigation/Pasted image 20260522060307.png)
+![image_22](</images/articles/windows_investigation/Pasted image 20260522060307.png>)
 
 > [!Note]
 > all the event names refer to an Object **except event ID 4657**, which refers to the registry.
 > This is because event IDs 4656, 4658, 4660, and 4663 are designed to record any access to any object, including the registry keys,
 > while event ID 4657 is designed to audit changes in the registry keys.
 
-![image_23](/images/articles/windows_investigation/Pasted image 20260522060428.png)
+![image_23](</images/articles/windows_investigation/Pasted image 20260522060428.png>)
 
 - Object Server field is always Security.
 - Object Type field refers to the type of the accessed object, which could be a **file**, **key**, or **SAM**
@@ -707,7 +707,7 @@ schtasks /create /tn mysc /tr C:\Users\Public\test.exe /sc ONLOGON / ru System
 
 ##### Windows scheduled tasks event ID 4698 = A scheduled task was created
 
-![image_24](/images/articles/windows_investigation/image.png)
+![image_24](</images/articles/windows_investigation/image.png>)
 
 - at `2020-09-21T03:15:45`,
   - an attacker used the compromised account (**THESHIRE\pgustavo**)
@@ -740,9 +740,9 @@ Microsoft allows you to track every new service creation activity by recording:
 - event ID **4697** in the **Security event** **logs**.
 Both events have the same event name – **A service was installed in the system**
 
-![image_25](/images/articles/windows_investigation/Pasted image 20260522053719.png)
+![image_25](</images/articles/windows_investigation/Pasted image 20260522053719.png>)
 
-![image_26](/images/articles/windows_investigation/Pasted image 20260522053737.png)
+![image_26](</images/articles/windows_investigation/Pasted image 20260522053737.png>)
 
 In the above case,
 
@@ -790,7 +790,7 @@ To keep persistence on the victim's machine by using WMI event subscription, an 
 
 **example:**
 
-![image_27](/images/articles/windows_investigation/Pasted image 20260522042023.png)
+![image_27](</images/articles/windows_investigation/Pasted image 20260522042023.png>)
 
 The preceding event indicates that:
 
@@ -812,7 +812,7 @@ The preceding event indicates that:
 An attacker can use the Windows built-in Remote Desktop connection tool to fully access and control remote systems in a network for lateral movement.
 The attacker takes advantage of that the RDP traffic is usually considered legitimate traffic, usually permitted from security devices, and the RDP application is usually installed and enabled on all environment’s systems.
 
-![image_28](/images/articles/windows_investigation/Pasted image 20260522062710.png)
+![image_28](</images/articles/windows_investigation/Pasted image 20260522062710.png>)
 
 ##### Source machine event logs
 
@@ -826,7 +826,7 @@ This is the event that will record the execution of `mstsc.exe`, the **Remote De
 - **Event ID 4688** ==> record the execution of the `rdpclip.exe` and `tstheme.exe` processes.
 - **Event ID 4624** ==> records users’ **successful authentication** over the RDP session.
 
-![image_29](/images/articles/windows_investigation/Pasted image 20260522063113.png)
+![image_29](</images/articles/windows_investigation/Pasted image 20260522063113.png>)
 
 The preceding screenshot shows that:
 
@@ -842,7 +842,7 @@ To find the source machine name of the RDP login,
   - **Event ID 4778** ==>  records every reconnected RDP session.
   - **Event ID 4779** ==> records every disconnected RDP session.
 
-![image_30](/images/articles/windows_investigation/Pasted image 20260522063504.png)
+![image_30](</images/articles/windows_investigation/Pasted image 20260522063504.png>)
 
 > [!Tip] To distinguish between legitimate and malicious RDP connections
 > it is crucial to **investigate whether** the RDP connection was established between two regular workstations (**client to client**),
@@ -859,7 +859,7 @@ Windows admin shares include:
 - `ADMIN$` = allows you access to the Windows folder of the remote machine.
 - `IPC$` = is a special Windows admin share usually used for named pipe connections.
 
-![image_31](/images/articles/windows_investigation/Pasted image 20260522065901.png)
+![image_31](</images/articles/windows_investigation/Pasted image 20260522065901.png>)
 
 ##### NET command Line tool
 
@@ -887,7 +887,7 @@ The most valuable events recorded on the target system are:
 
 ###### Event ID 4624
 
-![image_32](/images/articles/windows_investigation/Pasted image 20260522070237.png)
+![image_32](</images/articles/windows_investigation/Pasted image 20260522070237.png>)
 
 ###### Event ID 5140
 
@@ -895,13 +895,13 @@ It's recorded after event ID 4624 in the Security event log file and allows you 
 
 **BUT**, this event does not include the accessed and potentially transferred files in the accessed shared folders.
 
-![image_33](/images/articles/windows_investigation/Pasted image 20260522070432.png)
+![image_33](</images/articles/windows_investigation/Pasted image 20260522070432.png>)
 
 ###### Event ID 5145
 
 allows you to track the accessed shared files
 
-![image_34](/images/articles/windows_investigation/Pasted image 20260522070559.png)
+![image_34](</images/articles/windows_investigation/Pasted image 20260522070559.png>)
 
 The preceding scenario describes the activity of an attacker who used the Windows admin shares technique for lateral movement.
 
@@ -918,7 +918,7 @@ The preceding scenario describes the activity of an attacker who used the Window
 
 PsExec is a Sysinternals tool developed by Microsoft for remote code executions on other systems. Most attackers use the PsExec tool for both remote code execution and lateral movement.
 
-![image_35](/images/articles/windows_investigation/Pasted image 20260522073109.png)
+![image_35](</images/articles/windows_investigation/Pasted image 20260522073109.png>)
 
 The preceding figure describes:
 
@@ -942,7 +942,7 @@ If the attacker has a proper administrative privilege, by entering the aforement
 
 The `psexesvc.exe` binary is a renamed copy of the `psexec.exe` binary to handle the remote execution from the source to the remote host.
 
-![image_36](/images/articles/windows_investigation/Pasted image 20260522073800.png)
+![image_36](</images/articles/windows_investigation/Pasted image 20260522073800.png>)
 
 ##### Source machine event logs
 
@@ -965,13 +965,13 @@ The `psexesvc.exe` binary is a renamed copy of the `psexec.exe` binary to handle
   - **4697** ==> stored within security events log file.
   - **7045** ==> stored within system events log file.
 
-![image_37](/images/articles/windows_investigation/Pasted image 20260522074407.png)
+![image_37](</images/articles/windows_investigation/Pasted image 20260522074407.png>)
 
 ###### Event ID 4688
 
 - records that the `PSEXESVC.exe` binary was executed and spawned by `Services.exe`, which is the expected parent process of all the services’ binaries.
 
-![image_38](/images/articles/windows_investigation/Pasted image 20260522074502.png)
+![image_38](</images/articles/windows_investigation/Pasted image 20260522074502.png>)
 
 > [!Tip]  To differentiate between the legitimate and malicious use of PsExec
 > it is crucial to establish a baseline for your environment. For example,
@@ -995,7 +995,7 @@ Invoke-Command -ComputerName VICTIM -ScriptBlock {Start-Process c:\malwarefolder
 Enter-PSSession -ComputerName VICTIM -Credential $credentials
 ```
 
-![image_39](/images/articles/windows_investigation/Pasted image 20260522080738.png)
+![image_39](</images/articles/windows_investigation/Pasted image 20260522080738.png>)
 
 ##### Source machine event logs
 
@@ -1008,9 +1008,9 @@ Enter-PSSession -ComputerName VICTIM -Credential $credentials
 - **Event ID 4688** ==> logs and records the execution of the `wsmprovhost.exe` process,
   which is the process of the Windows Remote PowerShell session when using the WinRM service.
   - The `wsmprovhost.exe` process executes on the target system to receive the entered commands from the source machine’s PowerShell process, to be executed on the target system.
-  ![image_40](/images/articles/windows_investigation/Pasted image 20260522081415.png)
+  ![image_40](</images/articles/windows_investigation/Pasted image 20260522081415.png>)
 for more investigation
 - **Event IDs 800** and **4104** and found that event ID 4104 decoded and logged the full encoded script
   
-  ![image_41](/images/articles/windows_investigation/Pasted image 20260522081716.png)
-  ![image_42](/images/articles/windows_investigation/Pasted image 20260522081750.png)
+  ![image_41](</images/articles/windows_investigation/Pasted image 20260522081716.png>)
+  ![image_42](</images/articles/windows_investigation/Pasted image 20260522081750.png>)

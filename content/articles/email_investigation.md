@@ -1,5 +1,5 @@
 ---
-title: "Email Investigation - Effective Threat Investigation for SOC Analysts (Part 1) Notes"
+title: "Email Investigation - Effective Threat Investigation for SOC Analysts Book (Part 1) Notes"
 description: "A practical SOC-focused reference covering email threats, email flow, header analysis, mail hops, sender infrastructure, spoofing validation, and SPF, DKIM, and DMARC authentication."
 date: "2026-08-15"
 tags:

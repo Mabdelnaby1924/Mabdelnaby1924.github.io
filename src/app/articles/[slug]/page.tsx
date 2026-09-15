@@ -36,11 +36,24 @@ export async function generateMetadata({
       type: "article",
       url: `${siteConfig.url}/articles/${slug}`,
       tags,
+      images: article.frontmatter.thumbnail
+        ? [
+            {
+              url: `${siteConfig.url}${article.frontmatter.thumbnail}`,
+              width: 1200,
+              height: 630,
+              alt: title,
+            },
+          ]
+        : undefined,
     },
     twitter: {
-      card: "summary",
+      card: article.frontmatter.thumbnail ? "summary_large_image" : "summary",
       title,
       description,
+      images: article.frontmatter.thumbnail
+        ? [`${siteConfig.url}${article.frontmatter.thumbnail}`]
+        : undefined,
     },
   };
 }
