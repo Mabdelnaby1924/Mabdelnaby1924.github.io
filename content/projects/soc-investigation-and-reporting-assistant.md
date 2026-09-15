@@ -1,7 +1,7 @@
 ---
 title: "SOC Investigation & Reporting Assistant"
-description: "An analyst productivity and reporting platform designed for SOC Tier-1 and Tier-2 teams, transforming raw security observations into validated findings and ticket-ready reports."
-date: "2026-09-10"
+description: "An analyst productivity and reporting platform designed for SOC Tier-1, transforming raw security observations into validated findings and ticket-ready reports."
+date: "2026-09-14"
 github: "https://github.com/Mabdelnaby1924/SOC-Investigation-and-Reporting-Assistant"
 published: true
 tags:
@@ -22,7 +22,7 @@ stack:
 
 # SOC Investigation & Reporting Assistant
 
-An analyst productivity and reporting platform designed for Security Operations Center (SOC) teams, particularly Tier-1 and Tier-2 analysts. Built around a structured, behavior-first investigation methodology, the assistant transforms raw security observations into validated findings, AI-augmented analytical assessments, and professional ticket-ready reports.
+An analyst productivity and reporting platform designed for Security Operations Center (SOC) teams, particularly Tier-1 analysts. Built around a structured, behavior-first investigation methodology, the assistant transforms raw security observations into validated findings, AI-augmented analytical assessments, and professional ticket-ready reports.
 
 ---
 

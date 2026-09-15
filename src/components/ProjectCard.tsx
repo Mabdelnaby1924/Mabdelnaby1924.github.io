@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Tag } from "./Tag";
-import { ExternalLink } from "lucide-react";
+import { Calendar, ExternalLink } from "lucide-react";
 import type { ContentFrontmatter } from "@/lib/content";
 
 function GithubSmallIcon() {
@@ -23,9 +23,25 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({ slug, frontmatter }: ProjectCardProps) {
+  const formattedDate = frontmatter.date
+    ? new Date(frontmatter.date).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      })
+    : "";
+
   return (
     <div className="group rounded-xl border border-card-border bg-card hover:border-accent/30 transition-colors duration-200">
       <Link href={`/projects/${slug}`} className="block p-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-xl">
+        {formattedDate && (
+          <div className="flex items-center gap-3 text-xs text-foreground-muted mb-3">
+            <span className="inline-flex items-center gap-1">
+              <Calendar size={12} />
+              {formattedDate}
+            </span>
+          </div>
+        )}
         <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-accent transition-colors">
           {frontmatter.title}
         </h3>
