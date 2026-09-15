@@ -34,11 +34,24 @@ export async function generateMetadata({
       description,
       type: "article",
       url: `${siteConfig.url}/projects/${slug}`,
+      images: project.frontmatter.thumbnail
+        ? [
+            {
+              url: `${siteConfig.url}${project.frontmatter.thumbnail}`,
+              width: 1200,
+              height: 630,
+              alt: title,
+            },
+          ]
+        : undefined,
     },
     twitter: {
-      card: "summary",
+      card: project.frontmatter.thumbnail ? "summary_large_image" : "summary",
       title,
       description,
+      images: project.frontmatter.thumbnail
+        ? [`${siteConfig.url}${project.frontmatter.thumbnail}`]
+        : undefined,
     },
   };
 }

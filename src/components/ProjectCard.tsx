@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Tag } from "./Tag";
 import { Calendar, ExternalLink } from "lucide-react";
 import type { ContentFrontmatter } from "@/lib/content";
@@ -34,6 +35,16 @@ export function ProjectCard({ slug, frontmatter }: ProjectCardProps) {
   return (
     <div className="group rounded-xl border border-card-border bg-card hover:border-accent/30 transition-colors duration-200">
       <Link href={`/projects/${slug}`} className="block p-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-xl">
+        {frontmatter.thumbnail && (
+          <div className="relative w-full h-48 mb-4 overflow-hidden rounded-lg">
+            <Image
+              src={frontmatter.thumbnail}
+              alt={frontmatter.title}
+              fill
+              className="object-cover transition-transform duration-300 group-hover:scale-105"
+            />
+          </div>
+        )}
         {formattedDate && (
           <div className="flex items-center gap-3 text-xs text-foreground-muted mb-3">
             <span className="inline-flex items-center gap-1">

@@ -4,6 +4,7 @@ description: "An analyst productivity and reporting platform designed for SOC Ti
 date: "2026-09-14"
 github: "https://github.com/Mabdelnaby1924/SOC-Investigation-and-Reporting-Assistant"
 published: true
+thumbnail: "/images/projects/soc_investigation_assistant.png"
 tags:
   - SOC Automation
   - Incident Response
