@@ -1,7 +1,7 @@
 ---
 title: "Red Hat System Administration I (RH124) Comprehensive Notes"
 description: "A complete reference guide and study notes for Red Hat System Administration I (RHEL 9), covering CLI access, file management, user & group administration, permissions, systemd services, SSH, networking, storage, and software packages."
-date: "2025-09-7"
+date: "2025-02-7"
 tags:
   - Linux
   - Red Hat
