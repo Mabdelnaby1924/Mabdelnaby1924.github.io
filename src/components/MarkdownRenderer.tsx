@@ -1,8 +1,15 @@
+import React from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { MermaidDiagram } from "./MermaidDiagram";
 
 interface MarkdownRendererProps {
   content: string;
+}
+
+interface CodeElementProps {
+  className?: string;
+  children?: React.ReactNode;
 }
 
 export function MarkdownRenderer({ content }: MarkdownRendererProps) {
@@ -75,11 +82,23 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
               </code>
             );
           },
-          pre: ({ children }) => (
-            <pre className="bg-code-bg rounded-lg p-4 overflow-x-auto mb-4 text-sm">
-              {children}
-            </pre>
-          ),
+          pre: ({ children }) => {
+            const child = Array.isArray(children) ? children[0] : children;
+            if (
+              React.isValidElement<CodeElementProps>(child) &&
+              typeof child.props.className === "string" &&
+              child.props.className.includes("language-mermaid")
+            ) {
+              const chart = String(child.props.children || "").replace(/\n$/, "");
+              return <MermaidDiagram chart={chart} />;
+            }
+
+            return (
+              <pre className="bg-code-bg rounded-lg p-4 overflow-x-auto mb-4 text-sm">
+                {children}
+              </pre>
+            );
+          },
           table: ({ children }) => (
             <div className="overflow-x-auto mb-4">
               <table className="w-full border-collapse text-sm">
