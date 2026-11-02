@@ -350,7 +350,7 @@ flowchart TD
 
 # Email Flow
 
-![[Pasted image 20260819075844.png]]
+![Email_Flow](/images/articles/email_investigation/email_flow.png)
 
 ```mermaid
 flowchart LR
