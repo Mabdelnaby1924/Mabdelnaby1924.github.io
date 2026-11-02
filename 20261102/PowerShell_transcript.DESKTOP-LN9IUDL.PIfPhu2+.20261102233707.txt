@@ -1,0 +1,32 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20261102233707
+Username: DESKTOP-LN9IUDL\mahmoud_abdelnaby
+RunAs User: DESKTOP-LN9IUDL\mahmoud_abdelnaby
+Configuration Name: 
+Machine: DESKTOP-LN9IUDL (Microsoft Windows NT 10.0.26200.0)
+Host Application: powershell -Command $env:TEMP = $env:_TEMP; $env:TMP = $env:_TMP; $env:LOCALAPPDATA = $env:_LOCALAPPDATA; cd d:\courses\My_portfolio\portfolio2; if (Test-Path postcss.config.mjs) { Get-Content postcss.config.mjs } elseif (Test-Path postcss.config.js) { Get-Content postcss.config.js } elseif (Test-Path postcss.config.cjs) { Get-Content postcss.config.cjs } else { Write-Output "No postcss config found" }
+Process ID: 2820
+PSVersion: 5.1.26100.9711
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9711
+BuildVersion: 10.0.26100.9711
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+PS>$env:TEMP = $env:_TEMP; $env:TMP = $env:_TMP; $env:LOCALAPPDATA = $env:_LOCALAPPDATA; cd d:\courses\My_portfolio\portfolio2; if (Test-Path postcss.config.mjs) { Get-Content postcss.config.mjs } elseif (Test-Path postcss.config.js) { Get-Content postcss.config.js } elseif (Test-Path postcss.config.cjs) { Get-Content postcss.config.cjs } else { Write-Output "No postcss config found" }
+const config = {
+  plugins: {
+    "@tailwindcss/postcss": {},
+  },
+};
+
+export default config;
+PS>$global:?
+True
+**********************
+Windows PowerShell transcript end
+End time: 20261102233708
+**********************
