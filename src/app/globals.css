@@ -95,6 +95,7 @@
 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-arabic: var(--font-ibm-plex-arabic);
 }
 
 /* ============================================
@@ -106,6 +107,26 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Arabic & RTL Styling */
+[lang="ar"], [dir="rtl"], .prose-rtl {
+  font-family: var(--font-ibm-plex-arabic), ui-sans-serif, system-ui, sans-serif;
+}
+
+.prose-rtl {
+  line-height: 1.85;
+  letter-spacing: normal;
+}
+
+.prose-rtl p,
+.prose-rtl li,
+.prose-rtl blockquote,
+.prose-rtl h1,
+.prose-rtl h2,
+.prose-rtl h3,
+.prose-rtl h4 {
+  letter-spacing: normal;
 }
 
 /* Smooth scrolling */

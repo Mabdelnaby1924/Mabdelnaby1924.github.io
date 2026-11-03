@@ -25,7 +25,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const article = getContentBySlug("articles", slug);
   if (!article) return {};
-  const { title, description, tags } = article.frontmatter;
+  const { title, description, tags, lang } = article.frontmatter;
   return {
     title,
     description,
@@ -34,6 +34,7 @@ export async function generateMetadata({
       title,
       description,
       type: "article",
+      locale: lang === "ar" ? "ar_AR" : siteConfig.locale,
       url: `${siteConfig.url}/articles/${slug}`,
       tags,
       images: article.frontmatter.thumbnail
@@ -71,18 +72,31 @@ export default async function ArticleDetailPage({
   }
 
   const { frontmatter, content } = article;
+  const isRtl = frontmatter.lang === "ar";
 
   const formattedDate = frontmatter.date
-    ? new Date(frontmatter.date).toLocaleDateString("en-US", {
+    ? new Date(frontmatter.date).toLocaleDateString(isRtl ? "ar-EG-u-nu-latn" : "en-US", {
         year: "numeric",
         month: "long",
         day: "numeric",
       })
     : "";
 
+  const localizedReadingTime =
+    isRtl && frontmatter.readingTime
+      ? frontmatter.readingTime.replace(/\s*min/, " دقيقة")
+      : frontmatter.readingTime;
+
   return (
-    <main className="max-w-3xl mx-auto px-4 py-16 w-full">
-      <BackLink href="/articles" label="Back to Articles" />
+    <main
+      className={`max-w-3xl mx-auto px-4 py-16 w-full ${isRtl ? "prose-rtl" : ""}`}
+      dir={isRtl ? "rtl" : "ltr"}
+      lang={frontmatter.lang || "en"}
+    >
+      <BackLink
+        href="/articles"
+        label={isRtl ? "العودة إلى المقالات" : "Back to Articles"}
+      />
 
       {/* Header */}
       <header className="mb-8">
@@ -98,10 +112,10 @@ export default async function ArticleDetailPage({
               {formattedDate}
             </span>
           )}
-          {frontmatter.readingTime && (
+          {localizedReadingTime && (
             <span className="inline-flex items-center gap-1.5">
               <Clock size={14} />
-              {frontmatter.readingTime}
+              {localizedReadingTime}
             </span>
           )}
         </div>
@@ -124,7 +138,7 @@ export default async function ArticleDetailPage({
       <hr className="border-border mb-8" />
 
       {/* Content */}
-      <MarkdownRenderer content={content} />
+      <MarkdownRenderer content={content} lang={frontmatter.lang} />
     </main>
   );
 }

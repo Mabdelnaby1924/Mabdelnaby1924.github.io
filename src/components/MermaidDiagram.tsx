@@ -5,6 +5,7 @@ import { useEffect, useId, useRef, useState } from "react";
 interface MermaidDiagramProps {
   chart: string;
   label?: string;
+  lang?: string;
 }
 
 type MermaidModule = typeof import("mermaid");
@@ -22,10 +23,20 @@ function loadMermaid(): Promise<MermaidModule> {
   return mermaidPromise;
 }
 
-function readTheme() {
-  const styles = getComputedStyle(document.documentElement);
+function readTheme(isArabic: boolean) {
+  const docStyles = getComputedStyle(document.documentElement);
+  const bodyStyles = getComputedStyle(document.body);
   const token = (name: string, fallback: string) =>
-    styles.getPropertyValue(name).trim() || fallback;
+    docStyles.getPropertyValue(name).trim() || fallback;
+
+  let fontFamily =
+    docStyles.getPropertyValue("--font-geist-sans").trim() ||
+    "ui-sans-serif, system-ui, sans-serif";
+
+  const arabicFont = bodyStyles.getPropertyValue("--font-ibm-plex-arabic").trim();
+  if (isArabic && arabicFont) {
+    fontFamily = `${arabicFont}, ui-sans-serif, system-ui, sans-serif`;
+  }
 
   return {
     isDark: document.documentElement.getAttribute("data-theme") === "dark",
@@ -35,9 +46,8 @@ function readTheme() {
     foreground: token("--foreground", "#18181b"),
     secondary: token("--foreground-secondary", "#52525b"),
     border: token("--border", "#e4e4e7"),
-    fontFamily:
-      styles.getPropertyValue("--font-geist-sans").trim() ||
-      "ui-sans-serif, system-ui, sans-serif",
+    fontFamily,
+    arabicFont,
   };
 }
 
@@ -50,11 +60,13 @@ function readTheme() {
 export function MermaidDiagram({
   chart,
   label = "Diagram",
+  lang = "en",
 }: MermaidDiagramProps) {
   const reactId = useId();
   const [svg, setSvg] = useState("");
   const [error, setError] = useState<string | null>(null);
   const requestRef = useRef(0);
+  const isArabic = lang === "ar";
 
   useEffect(() => {
     const baseId = `mermaid-${reactId.replace(/[^a-zA-Z0-9_-]/g, "")}`;
@@ -64,7 +76,20 @@ export function MermaidDiagram({
 
       try {
         const { default: mermaid } = await loadMermaid();
-        const theme = readTheme();
+        const theme = readTheme(isArabic);
+
+        if (isArabic && typeof document !== "undefined" && "fonts" in document && theme.arabicFont) {
+          try {
+            await Promise.all([
+              document.fonts.load(`400 14px ${theme.arabicFont}`, chart),
+              document.fonts.load(`600 14px ${theme.arabicFont}`, chart),
+              document.fonts.load(`700 14px ${theme.arabicFont}`, chart),
+              document.fonts.ready,
+            ]);
+          } catch {
+            // Ignore font loading errors; fallback gracefully
+          }
+        }
 
         mermaid.initialize({
           startOnLoad: false,
@@ -128,12 +153,12 @@ export function MermaidDiagram({
       observer.disconnect();
       requestRef.current += 1;
     };
-  }, [chart, reactId]);
+  }, [chart, reactId, isArabic]);
 
   return (
     <figure
       dir="ltr"
-      className="diagram my-6 overflow-x-auto rounded-lg border border-border bg-card p-4"
+      className="diagram my-6 overflow-x-auto rounded-lg border border-border bg-card p-4 [&_.nodeLabel]:[unicode-bidi:plaintext] [&_.edgeLabel]:[unicode-bidi:plaintext]"
     >
       {error ? (
         <div>

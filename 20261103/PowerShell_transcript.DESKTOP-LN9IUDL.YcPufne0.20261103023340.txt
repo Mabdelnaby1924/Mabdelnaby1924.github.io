@@ -1,0 +1,78 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20261103023341
+Username: DESKTOP-LN9IUDL\mahmoud_abdelnaby
+RunAs User: DESKTOP-LN9IUDL\mahmoud_abdelnaby
+Configuration Name: 
+Machine: DESKTOP-LN9IUDL (Microsoft Windows NT 10.0.26200.0)
+Host Application: powershell -Command $env:TEMP = $env:_TEMP; $env:TMP = $env:_TMP; $env:LOCALAPPDATA = $env:_LOCALAPPDATA; cd d:\courses\My_portfolio\portfolio2; git status --short
+Process ID: 6936
+PSVersion: 5.1.26100.9711
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9711
+BuildVersion: 10.0.26100.9711
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+PS>$env:TEMP = $env:_TEMP; $env:TMP = $env:_TMP; $env:LOCALAPPDATA = $env:_LOCALAPPDATA; cd d:\courses\My_portfolio\portfolio2; git status --short
+PS>TerminatingError(): "Program 'git.exe' failed to run: Win32 internal error "Access is denied" 0x5 occurred while reading the console output buffer. Contact Microsoft Customer Support Services.At line:1 char:126
++ ... CALAPPDATA; cd d:\courses\My_portfolio\portfolio2; git status --short
++                                                        ~~~~~~~~~~~~~~~~~~."
+**********************
+Windows PowerShell transcript start
+Start time: 20261103023341
+Username: DESKTOP-LN9IUDL\mahmoud_abdelnaby
+RunAs User: DESKTOP-LN9IUDL\mahmoud_abdelnaby
+Configuration Name: 
+Machine: DESKTOP-LN9IUDL (Microsoft Windows NT 10.0.26200.0)
+Host Application: powershell -Command $env:TEMP = $env:_TEMP; $env:TMP = $env:_TMP; $env:LOCALAPPDATA = $env:_LOCALAPPDATA; cd d:\courses\My_portfolio\portfolio2; git status --short
+Process ID: 6936
+PSVersion: 5.1.26100.9711
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9711
+BuildVersion: 10.0.26100.9711
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+PS>CommandInvocation(Out-String): "Out-String"
+>> ParameterBinding(Out-String): name="InputObject"; value="Program 'git.exe' failed to run: Win32 internal error "Access is denied" 0x5 occurred while reading the console output buffer. Contact Microsoft Customer Support Services.At line:1 char:126
++ ... CALAPPDATA; cd d:\courses\My_portfolio\portfolio2; git status --short
++                                                        ~~~~~~~~~~~~~~~~~~."
+Program 'git.exe' failed to run: Win32 internal error "Access is denied" 0x5 occurred while reading the console output 
+buffer. Contact Microsoft Customer Support Services.At line:1 char:126
++ ... CALAPPDATA; cd d:\courses\My_portfolio\portfolio2; git status --short
++                                                        ~~~~~~~~~~~~~~~~~~.
+At line:1 char:126
++ ... CALAPPDATA; cd d:\courses\My_portfolio\portfolio2; git status --short
++                                                        ~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ResourceUnavailable: (:) [], ApplicationFailedException
+    + FullyQualifiedErrorId : NativeCommandFailed
+Program 'git.exe' failed to run: Win32 internal error "Access is denied" 0x5 occurred while reading the console output 
+buffer. Contact Microsoft Customer Support Services.At line:1 char:126
++ ... CALAPPDATA; cd d:\courses\My_portfolio\portfolio2; git status --short
++                                                        ~~~~~~~~~~~~~~~~~~.
+At line:1 char:126
++ ... CALAPPDATA; cd d:\courses\My_portfolio\portfolio2; git status --short
++                                                        ~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ResourceUnavailable: (:) [], ApplicationFailedException
+    + FullyQualifiedErrorId : NativeCommandFailed
+Program 'git.exe' failed to run: Win32 internal error "Access is denied" 0x5 occurred while reading the console output
+buffer. Contact Microsoft Customer Support Services.At line:1 char:126
++ ... CALAPPDATA; cd d:\courses\My_portfolio\portfolio2; git status --short
++                                                        ~~~~~~~~~~~~~~~~~~.
+At line:1 char:126
++ ... CALAPPDATA; cd d:\courses\My_portfolio\portfolio2; git status --short
++                                                        ~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ResourceUnavailable: (:) [], ApplicationFailedException
+    + FullyQualifiedErrorId : NativeCommandFailed
+
+PS>$global:?
+False
+**********************
+Windows PowerShell transcript end
+End time: 20261103023342
+**********************

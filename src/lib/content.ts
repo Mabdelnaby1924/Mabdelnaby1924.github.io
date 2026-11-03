@@ -18,6 +18,7 @@ export interface ContentFrontmatter {
   stack?: string[];
   pdf?: string;
   category?: string;
+  lang?: "en" | "ar";
 }
 
 export interface ContentItem {
@@ -37,6 +38,18 @@ type ContentType = "projects" | "reports" | "articles";
 /* ============================================
    Helpers
    ============================================ */
+
+export function parseFilename(filename: string): { slug: string; lang: "en" | "ar"; baseSlug: string } {
+  if (filename.endsWith(".ar.md") || filename.endsWith(".ar.mdx")) {
+    const base = filename.replace(/\.ar\.mdx?$/, "");
+    return { slug: `${base}-ar`, lang: "ar", baseSlug: base };
+  }
+  const clean = filename.replace(/\.mdx?$/, "");
+  if (clean.endsWith("-ar")) {
+    return { slug: clean, lang: "ar", baseSlug: clean.replace(/-ar$/, "") };
+  }
+  return { slug: clean, lang: "en", baseSlug: clean };
+}
 
 /**
  * Get all content items of a given type, sorted by date (newest first).
@@ -58,9 +71,11 @@ export function getAllContent(
     const filePath = path.join(dir, filename);
     const fileContent = fs.readFileSync(filePath, "utf-8");
     const { data, content } = matter(fileContent);
+    const parsed = parseFilename(filename);
+    const lang: "en" | "ar" = (data.lang === "ar" || data.lang === "en") ? data.lang : parsed.lang;
 
     return {
-      slug: filename.replace(/\.mdx?$/, ""),
+      slug: parsed.slug,
       frontmatter: {
         title: data.title ?? "Untitled",
         description: data.description ?? "",
@@ -73,6 +88,7 @@ export function getAllContent(
         stack: data.stack,
         pdf: data.pdf,
         category: data.category ?? "technical",
+        lang,
       },
       content,
     };
@@ -99,23 +115,35 @@ export function getContentBySlug(
 ): ContentItem | undefined {
   const dir = path.join(CONTENT_DIR, type);
 
-  const mdPath = path.join(dir, `${slug}.md`);
-  const mdxPath = path.join(dir, `${slug}.mdx`);
-
-  let filePath: string | undefined;
-
-  if (fs.existsSync(mdxPath)) {
-    filePath = mdxPath;
-  } else if (fs.existsSync(mdPath)) {
-    filePath = mdPath;
+  // Check candidates in order
+  const candidates: string[] = [];
+  if (slug.endsWith("-ar")) {
+    const base = slug.replace(/-ar$/, "");
+    candidates.push(`${base}.ar.mdx`, `${base}.ar.md`, `${slug}.mdx`, `${slug}.md`);
+  } else {
+    candidates.push(`${slug}.mdx`, `${slug}.md`, `${slug}.ar.mdx`, `${slug}.ar.md`);
   }
 
-  if (!filePath) {
+  let filePath: string | undefined;
+  let resolvedFilename: string | undefined;
+
+  for (const candidate of candidates) {
+    const p = path.join(dir, candidate);
+    if (fs.existsSync(p)) {
+      filePath = p;
+      resolvedFilename = candidate;
+      break;
+    }
+  }
+
+  if (!filePath || !resolvedFilename) {
     return undefined;
   }
 
   const fileContent = fs.readFileSync(filePath, "utf-8");
   const { data, content } = matter(fileContent);
+  const parsed = parseFilename(resolvedFilename);
+  const lang: "en" | "ar" = (data.lang === "ar" || data.lang === "en") ? data.lang : parsed.lang;
 
   return {
     slug,
@@ -131,6 +159,7 @@ export function getContentBySlug(
       stack: data.stack,
       pdf: data.pdf,
       category: data.category ?? "technical",
+      lang,
     },
     content,
   };
@@ -150,5 +179,5 @@ export function getAllSlugs(type: ContentType): string[] {
   return fs
     .readdirSync(dir)
     .filter((f) => f.endsWith(".md") || f.endsWith(".mdx"))
-    .map((f) => f.replace(/\.mdx?$/, ""));
+    .map((f) => parseFilename(f).slug);
 }

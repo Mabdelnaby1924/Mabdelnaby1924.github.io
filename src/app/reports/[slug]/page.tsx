@@ -25,7 +25,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const report = getContentBySlug("reports", slug);
   if (!report) return {};
-  const { title, description, tags } = report.frontmatter;
+  const { title, description, tags, lang } = report.frontmatter;
   return {
     title,
     description,
@@ -34,6 +34,7 @@ export async function generateMetadata({
       title,
       description,
       type: "article",
+      locale: lang === "ar" ? "ar_AR" : siteConfig.locale,
       url: `${siteConfig.url}/reports/${slug}`,
       tags,
       images: [
@@ -49,6 +50,7 @@ export async function generateMetadata({
       card: "summary",
       title,
       description,
+      images: [`${siteConfig.url}${report.frontmatter.thumbnail}`],
     },
   };
 }
@@ -66,18 +68,31 @@ export default async function ReportDetailPage({
   }
 
   const { frontmatter, content } = report;
+  const isRtl = frontmatter.lang === "ar";
 
   const formattedDate = frontmatter.date
-    ? new Date(frontmatter.date).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    })
+    ? new Date(frontmatter.date).toLocaleDateString(isRtl ? "ar-EG-u-nu-latn" : "en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
     : "";
 
+  const localizedReadingTime =
+    isRtl && frontmatter.readingTime
+      ? frontmatter.readingTime.replace(/\s*min/, " دقيقة")
+      : frontmatter.readingTime;
+
   return (
-    <main className="max-w-3xl mx-auto px-4 py-16 w-full">
-      <BackLink href="/reports" label="Back to Reports" />
+    <main
+      className={`max-w-3xl mx-auto px-4 py-16 w-full ${isRtl ? "prose-rtl" : ""}`}
+      dir={isRtl ? "rtl" : "ltr"}
+      lang={frontmatter.lang || "en"}
+    >
+      <BackLink
+        href="/reports"
+        label={isRtl ? "العودة إلى التقارير" : "Back to Reports"}
+      />
 
       {/* Header */}
       <header className="mb-8">
@@ -93,10 +108,10 @@ export default async function ReportDetailPage({
               {formattedDate}
             </span>
           )}
-          {frontmatter.readingTime && (
+          {localizedReadingTime && (
             <span className="inline-flex items-center gap-1.5">
               <Clock size={14} />
-              {frontmatter.readingTime}
+              {localizedReadingTime}
             </span>
           )}
         </div>
@@ -123,7 +138,7 @@ export default async function ReportDetailPage({
               className="inline-flex items-center gap-1.5 text-sm text-accent hover:text-accent-hover transition-colors"
             >
               <Download size={14} />
-              Download PDF
+              {isRtl ? "تحميل PDF" : "Download PDF"}
             </a>
           )}
 
@@ -134,7 +149,7 @@ export default async function ReportDetailPage({
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 text-sm text-accent hover:text-accent-hover transition-colors"
             >
-              View on GitHub
+              {isRtl ? "عرض على GitHub" : "View on GitHub"}
             </a>
           )}
         </div>
@@ -143,7 +158,7 @@ export default async function ReportDetailPage({
       <hr className="border-border mb-8" />
 
       {/* Content */}
-      <MarkdownRenderer content={content} />
+      <MarkdownRenderer content={content} lang={frontmatter.lang} />
     </main>
   );
 }

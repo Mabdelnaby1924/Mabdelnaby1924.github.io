@@ -1,0 +1,25 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20261103022234
+Username: DESKTOP-LN9IUDL\mahmoud_abdelnaby
+RunAs User: DESKTOP-LN9IUDL\mahmoud_abdelnaby
+Configuration Name: 
+Machine: DESKTOP-LN9IUDL (Microsoft Windows NT 10.0.26200.0)
+Host Application: powershell -Command $env:TEMP = $env:_TEMP; $env:TMP = $env:_TMP; $env:LOCALAPPDATA = $env:_LOCALAPPDATA; cd d:\courses\My_portfolio\portfolio2; if (Test-Path scratch_test_bidi.js) { Remove-Item scratch_test_bidi.js }
+Process ID: 5892
+PSVersion: 5.1.26100.9711
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9711
+BuildVersion: 10.0.26100.9711
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+PS>$env:TEMP = $env:_TEMP; $env:TMP = $env:_TMP; $env:LOCALAPPDATA = $env:_LOCALAPPDATA; cd d:\courses\My_portfolio\portfolio2; if (Test-Path scratch_test_bidi.js) { Remove-Item scratch_test_bidi.js }
+PS>$global:?
+True
+**********************
+Windows PowerShell transcript end
+End time: 20261103022235
+**********************

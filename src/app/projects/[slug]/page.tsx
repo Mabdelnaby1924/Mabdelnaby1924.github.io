@@ -25,7 +25,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const project = getContentBySlug("projects", slug);
   if (!project) return {};
-  const { title, description } = project.frontmatter;
+  const { title, description, lang } = project.frontmatter;
   return {
     title,
     description,
@@ -33,6 +33,7 @@ export async function generateMetadata({
       title,
       description,
       type: "article",
+      locale: lang === "ar" ? "ar_AR" : siteConfig.locale,
       url: `${siteConfig.url}/projects/${slug}`,
       images: project.frontmatter.thumbnail
         ? [
@@ -69,9 +70,10 @@ export default async function ProjectDetailPage({
   }
 
   const { frontmatter, content } = project;
+  const isRtl = frontmatter.lang === "ar";
 
   const formattedDate = frontmatter.date
-    ? new Date(frontmatter.date).toLocaleDateString("en-US", {
+    ? new Date(frontmatter.date).toLocaleDateString(isRtl ? "ar-EG-u-nu-latn" : "en-US", {
         year: "numeric",
         month: "long",
         day: "numeric",
@@ -79,8 +81,15 @@ export default async function ProjectDetailPage({
     : "";
 
   return (
-    <main className="max-w-3xl mx-auto px-4 py-16 w-full">
-      <BackLink href="/projects" label="Back to Projects" />
+    <main
+      className={`max-w-3xl mx-auto px-4 py-16 w-full ${isRtl ? "prose-rtl" : ""}`}
+      dir={isRtl ? "rtl" : "ltr"}
+      lang={frontmatter.lang || "en"}
+    >
+      <BackLink
+        href="/projects"
+        label={isRtl ? "العودة إلى المشاريع" : "Back to Projects"}
+      />
 
       {/* Header */}
       <header className="mb-8">
@@ -120,7 +129,7 @@ export default async function ProjectDetailPage({
             className="inline-flex items-center gap-1.5 text-sm text-accent hover:text-accent-hover transition-colors"
           >
             <ExternalLink size={14} />
-            View on GitHub
+            {isRtl ? "عرض على GitHub" : "View on GitHub"}
           </a>
         )}
       </header>
@@ -128,7 +137,7 @@ export default async function ProjectDetailPage({
       <hr className="border-border mb-8" />
 
       {/* Content */}
-      <MarkdownRenderer content={content} />
+      <MarkdownRenderer content={content} lang={frontmatter.lang} />
     </main>
   );
 }
