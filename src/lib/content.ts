@@ -181,3 +181,28 @@ export function getAllSlugs(type: ContentType): string[] {
     .filter((f) => f.endsWith(".md") || f.endsWith(".mdx"))
     .map((f) => parseFilename(f).slug);
 }
+
+/**
+ * Find the alternate translation slug for a given content item, if one exists.
+ */
+export function getAlternateSlug(
+  type: ContentType,
+  currentSlug: string,
+  currentLang: "en" | "ar"
+): string | undefined {
+  if (currentLang === "ar") {
+    const enSlug = currentSlug.replace(/-ar$/, "");
+    if (enSlug === currentSlug) return undefined;
+    const enItem = getContentBySlug(type, enSlug);
+    if (enItem && enItem.frontmatter.lang === "en" && enItem.frontmatter.published) {
+      return enSlug;
+    }
+  } else {
+    const arSlug = `${currentSlug}-ar`;
+    const arItem = getContentBySlug(type, arSlug);
+    if (arItem && arItem.frontmatter.lang === "ar" && arItem.frontmatter.published) {
+      return arSlug;
+    }
+  }
+  return undefined;
+}

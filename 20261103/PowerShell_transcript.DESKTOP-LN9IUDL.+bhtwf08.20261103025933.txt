@@ -1,0 +1,50 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20261103025933
+Username: DESKTOP-LN9IUDL\mahmoud_abdelnaby
+RunAs User: DESKTOP-LN9IUDL\mahmoud_abdelnaby
+Configuration Name: 
+Machine: DESKTOP-LN9IUDL (Microsoft Windows NT 10.0.26200.0)
+Host Application: powershell -Command $env:TEMP = $env:_TEMP; $env:TMP = $env:_TMP; $env:LOCALAPPDATA = $env:_LOCALAPPDATA; cd d:\courses\My_portfolio\portfolio2; if (Test-Path out/sitemap.xml) { Get-Content out/sitemap.xml | Select-Object -First 25 }
+Process ID: 5892
+PSVersion: 5.1.26100.9711
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9711
+BuildVersion: 10.0.26100.9711
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+PS>$env:TEMP = $env:_TEMP; $env:TMP = $env:_TMP; $env:LOCALAPPDATA = $env:_LOCALAPPDATA; cd d:\courses\My_portfolio\portfolio2; if (Test-Path out/sitemap.xml) { Get-Content out/sitemap.xml | Select-Object -First 25 }
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url>
+<loc>https://Mabdelnaby1924.github.io</loc>
+<lastmod>2026-11-03T00:58:23.973Z</lastmod>
+<changefreq>weekly</changefreq>
+<priority>1</priority>
+</url>
+<url>
+<loc>https://Mabdelnaby1924.github.io/projects</loc>
+<lastmod>2026-11-03T00:58:23.973Z</lastmod>
+<changefreq>weekly</changefreq>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://Mabdelnaby1924.github.io/reports</loc>
+<lastmod>2026-11-03T00:58:23.973Z</lastmod>
+<changefreq>weekly</changefreq>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://Mabdelnaby1924.github.io/articles</loc>
+<lastmod>2026-11-03T00:58:23.973Z</lastmod>
+<changefreq>weekly</changefreq>
+<priority>0.8</priority>
+PS>$global:?
+True
+**********************
+Windows PowerShell transcript end
+End time: 20261103025934
+**********************

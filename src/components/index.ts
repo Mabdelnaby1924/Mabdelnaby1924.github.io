@@ -18,3 +18,4 @@ export { MarkdownRenderer } from "./MarkdownRenderer";
 export { ReportsList } from "./ReportsList";
 export { ArticlesList } from "./ArticlesList";
 export { MermaidDiagram } from "./MermaidDiagram";
+export { LanguageSwitch } from "./LanguageSwitch";

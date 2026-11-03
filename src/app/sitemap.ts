@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { siteConfig } from "../../data/site-config";
-import { getAllSlugs } from "@/lib/content";
+import { getAllSlugs, getContentBySlug, getAlternateSlug } from "@/lib/content";
 
 export const dynamic = "force-static";
 
@@ -41,31 +41,32 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  // Dynamic content pages
-  const projectSlugs = getAllSlugs("projects");
-  const reportSlugs = getAllSlugs("reports");
-  const articleSlugs = getAllSlugs("articles");
+  function createEntry(type: "projects" | "reports" | "articles", slug: string) {
+    const item = getContentBySlug(type, slug);
+    const lang = item?.frontmatter.lang || "en";
+    const altSlug = getAlternateSlug(type, slug, lang);
 
-  const projectPages: MetadataRoute.Sitemap = projectSlugs.map((slug) => ({
-    url: `${baseUrl}/projects/${slug}`,
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: 0.6,
-  }));
+    const alternates = altSlug
+      ? {
+          languages: {
+            en: `${baseUrl}/${type}/${lang === "en" ? slug : altSlug}`,
+            ar: `${baseUrl}/${type}/${lang === "ar" ? slug : altSlug}`,
+          },
+        }
+      : undefined;
 
-  const reportPages: MetadataRoute.Sitemap = reportSlugs.map((slug) => ({
-    url: `${baseUrl}/reports/${slug}`,
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: 0.6,
-  }));
+    return {
+      url: `${baseUrl}/${type}/${slug}`,
+      lastModified: item?.frontmatter.date ? new Date(item.frontmatter.date) : new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+      alternates,
+    };
+  }
 
-  const articlePages: MetadataRoute.Sitemap = articleSlugs.map((slug) => ({
-    url: `${baseUrl}/articles/${slug}`,
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: 0.6,
-  }));
+  const projectPages = getAllSlugs("projects").map((slug) => createEntry("projects", slug));
+  const reportPages = getAllSlugs("reports").map((slug) => createEntry("reports", slug));
+  const articlePages = getAllSlugs("articles").map((slug) => createEntry("articles", slug));
 
   return [
     ...staticPages,

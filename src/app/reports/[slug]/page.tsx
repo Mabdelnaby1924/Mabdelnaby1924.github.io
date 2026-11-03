@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { getAllSlugs, getContentBySlug } from "@/lib/content";
+import { getAllSlugs, getContentBySlug, getAlternateSlug } from "@/lib/content";
 import { notFound } from "next/navigation";
 import { BackLink } from "@/components/BackLink";
 import { Tag } from "@/components/Tag";
 import { MarkdownRenderer } from "@/components/MarkdownRenderer";
+import { LanguageSwitch } from "@/components/LanguageSwitch";
 import { Calendar, Clock, Download } from "lucide-react";
 import { siteConfig } from "../../../../data/site-config";
 
@@ -25,11 +26,26 @@ export async function generateMetadata({
   const { slug } = await params;
   const report = getContentBySlug("reports", slug);
   if (!report) return {};
-  const { title, description, tags, lang } = report.frontmatter;
+  const { title, description, tags, lang = "en" } = report.frontmatter;
+  const altSlug = getAlternateSlug("reports", slug, lang);
+
+  const alternates = altSlug
+    ? {
+        canonical: `${siteConfig.url}/reports/${slug}`,
+        languages: {
+          en: `${siteConfig.url}/reports/${lang === "en" ? slug : altSlug}`,
+          ar: `${siteConfig.url}/reports/${lang === "ar" ? slug : altSlug}`,
+        },
+      }
+    : {
+        canonical: `${siteConfig.url}/reports/${slug}`,
+      };
+
   return {
     title,
     description,
     keywords: tags,
+    alternates,
     openGraph: {
       title,
       description,
@@ -68,7 +84,10 @@ export default async function ReportDetailPage({
   }
 
   const { frontmatter, content } = report;
-  const isRtl = frontmatter.lang === "ar";
+  const lang = frontmatter.lang || "en";
+  const isRtl = lang === "ar";
+  const altSlug = getAlternateSlug("reports", slug, lang);
+  const alternateHref = altSlug ? `/reports/${altSlug}` : undefined;
 
   const formattedDate = frontmatter.date
     ? new Date(frontmatter.date).toLocaleDateString(isRtl ? "ar-EG-u-nu-latn" : "en-US", {
@@ -87,12 +106,15 @@ export default async function ReportDetailPage({
     <main
       className={`max-w-3xl mx-auto px-4 py-16 w-full ${isRtl ? "prose-rtl" : ""}`}
       dir={isRtl ? "rtl" : "ltr"}
-      lang={frontmatter.lang || "en"}
+      lang={lang}
     >
-      <BackLink
-        href="/reports"
-        label={isRtl ? "العودة إلى التقارير" : "Back to Reports"}
-      />
+      <div className="flex items-center justify-between mb-8">
+        <BackLink
+          href="/reports"
+          label={isRtl ? "العودة إلى التقارير" : "Back to Reports"}
+        />
+        <LanguageSwitch currentLang={lang} alternateHref={alternateHref} />
+      </div>
 
       {/* Header */}
       <header className="mb-8">

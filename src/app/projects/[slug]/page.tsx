@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { getAllSlugs, getContentBySlug } from "@/lib/content";
+import { getAllSlugs, getContentBySlug, getAlternateSlug } from "@/lib/content";
 import { notFound } from "next/navigation";
 import { BackLink } from "@/components/BackLink";
 import { Tag } from "@/components/Tag";
 import { MarkdownRenderer } from "@/components/MarkdownRenderer";
+import { LanguageSwitch } from "@/components/LanguageSwitch";
 import { Calendar, ExternalLink } from "lucide-react";
 import { siteConfig } from "../../../../data/site-config";
 
@@ -25,10 +26,25 @@ export async function generateMetadata({
   const { slug } = await params;
   const project = getContentBySlug("projects", slug);
   if (!project) return {};
-  const { title, description, lang } = project.frontmatter;
+  const { title, description, lang = "en" } = project.frontmatter;
+  const altSlug = getAlternateSlug("projects", slug, lang);
+
+  const alternates = altSlug
+    ? {
+        canonical: `${siteConfig.url}/projects/${slug}`,
+        languages: {
+          en: `${siteConfig.url}/projects/${lang === "en" ? slug : altSlug}`,
+          ar: `${siteConfig.url}/projects/${lang === "ar" ? slug : altSlug}`,
+        },
+      }
+    : {
+        canonical: `${siteConfig.url}/projects/${slug}`,
+      };
+
   return {
     title,
     description,
+    alternates,
     openGraph: {
       title,
       description,
@@ -70,7 +86,10 @@ export default async function ProjectDetailPage({
   }
 
   const { frontmatter, content } = project;
-  const isRtl = frontmatter.lang === "ar";
+  const lang = frontmatter.lang || "en";
+  const isRtl = lang === "ar";
+  const altSlug = getAlternateSlug("projects", slug, lang);
+  const alternateHref = altSlug ? `/projects/${altSlug}` : undefined;
 
   const formattedDate = frontmatter.date
     ? new Date(frontmatter.date).toLocaleDateString(isRtl ? "ar-EG-u-nu-latn" : "en-US", {
@@ -84,12 +103,15 @@ export default async function ProjectDetailPage({
     <main
       className={`max-w-3xl mx-auto px-4 py-16 w-full ${isRtl ? "prose-rtl" : ""}`}
       dir={isRtl ? "rtl" : "ltr"}
-      lang={frontmatter.lang || "en"}
+      lang={lang}
     >
-      <BackLink
-        href="/projects"
-        label={isRtl ? "العودة إلى المشاريع" : "Back to Projects"}
-      />
+      <div className="flex items-center justify-between mb-8">
+        <BackLink
+          href="/projects"
+          label={isRtl ? "العودة إلى المشاريع" : "Back to Projects"}
+        />
+        <LanguageSwitch currentLang={lang} alternateHref={alternateHref} />
+      </div>
 
       {/* Header */}
       <header className="mb-8">
