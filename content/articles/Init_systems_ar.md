@@ -1,7 +1,7 @@
 ---
 title: "بقينا في عصر ال systemd"
 description: "إزاي SysVinit كان بيدير الـ services بالـ runlevels، وإزاي systemd بنظام الـ units والـ targets خدت مكانه"
-date: "2026-11-04"
+date: "2026-10-25"
 tags:
   - Linux
   - Linux Administration
