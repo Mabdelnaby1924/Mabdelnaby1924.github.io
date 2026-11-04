@@ -7,7 +7,7 @@ tags:
   - SOC
   - التحقيق الجنائي
   - أمن المعلومات
-published: true
+published: false
 readingTime: "5 min"
 category: "الأمن السيبراني"
 lang: "ar"
@@ -95,4 +95,3 @@ Get-NetTCPConnection -State Established | Where-Object { $_.RemoteAddress -eq "1
 # Verify process hashes against known threat intelligence
 sha256sum /var/log/auth.log
 ```
-

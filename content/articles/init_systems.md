@@ -1,13 +1,9 @@
-
-
-```
 ---
-title: "Starting and Stopping Services in Linux"
+title: "Initialization Systems in Linux"
 
 description: "A practical guide to Linux service management, covering initialization systems, SysVinit, systemd, service units, target units, runlevels, dependencies, and managing services throughout their lifecycle."
 
-date: null
-
+date: "2026-10-25"  
 tags:
   - Linux
   - Linux Administration
@@ -18,32 +14,10 @@ tags:
   - Service Management
   - Daemons
 
-thumbnail: "a_clean_modern_tutorial_style_thumbnail_image_wit.png"
+thumbnail: "/images/articles/Init_systems/thumbnail.png"
 
-published: false
-
-readingTime: 15
-
-github: null
-
-stack:
-  - Linux
-  - systemd
-  - SysVinit
-  - systemctl
-  - chkconfig
-  - Bash
-
-pdf: null
-
+readingTime: 15min
 category: "Linux Administration"
-
-subcategory: "Service Management"
-
-difficulty: "Intermediate"
-
-language: "English"
-
 topics:
   - Initialization Systems
   - Init and systemd
@@ -62,28 +36,13 @@ topics:
   - Creating Custom Services
   - SysVinit Service Scripts
   - Custom systemd Unit Files
-
-prerequisites:
-  - Linux Fundamentals
-  - Basic Linux Commands
-  - Linux Process Management
-
-related:
-  - Linux Initialization Systems
-  - systemd
-  - Linux Boot Process
-  - Linux Process Management
-
 source:
-  book: "Linux Bible"
-  author: "Christopher Negus"
-  edition: "10th"
-  chapter: 15
-  chapterTitle: "Starting and Stopping Services"
-
+  book: "Linux Bible"
+  author: "Christopher Negus"
+  edition: "10th"
+  chapter: 15
+  chapterTitle: "Starting and Stopping Services"
 ---
-```
-
 
 
 
@@ -91,18 +50,23 @@ The primary job of a Linux server system is to offer services to local or remote
 
 Ongoing services offered by a Linux system, such as access to a printer service or login service, are typically implemented by what is referred to as a daemon process. Most Linux systems have a method of managing each daemon process as a service using one of several popular initialization systems (also referred to as init systems).
 
-Advantages of using init systems include the ability to do the following: 
-- ##### Identify runlevels: 
+Advantages of using init systems include the ability to do the following:
+
+- ##### Identify runlevels
+
   Put together sets of services in what are referred to as runlevels or targets.
-- ##### Establish dependencies: 
-  Set service dependencies so, for example, a service that requires network interfaces won’t start until all network startup services have started successfully. 
-- ##### Set the default runlevel: 
-  Select which runlevel or target starts up when the system boots (a default runlevel). 
-- ##### Manage services: 
+
+- ##### Establish dependencies
+
+  Set service dependencies so, for example, a service that requires network interfaces won’t start until all network startup services have started successfully.
+
+- ##### Set the default runlevel
+
+  Select which runlevel or target starts up when the system boots (a default runlevel).
+
+- ##### Manage services
+
   Run commands that tell individual services to start, stop, pause, restart, or even reload configuration files.
-
-
-
 
 ## Understanding the Initialization Daemon (init or systemd)  
 
@@ -123,15 +87,15 @@ PID TTY TIME      CMD
 ```
 
 ### Understanding the classic init daemons  
+
 SysVinit daemon, the BSD init daemon’s configuration information file:`/etc/inittab`
 
-![[Pasted image 20261024172316.png]]
+![runlevels](/images/articles/Init_systems/runlevels.png)
 
 > [! CAUTION]
-> The only runlevels that should be used in the `/etc/inittab` file are 2 through 5. The other runlevels could cause problems. 
-> For example, if you put runlevel 6 in the `/etc/inittab` file as the default, 
+> The only runlevels that should be used in the `/etc/inittab` file are 2 through 5. The other runlevels could cause problems.
+> For example, if you put runlevel 6 in the `/etc/inittab` file as the default,
 > when the server reboots, it would go into a loop and continue to reboot over and over again
-
 
 runelvels can also be called directly using the init daemon itself.
 
@@ -157,9 +121,10 @@ Please stand by while rebooting the system
 ```
 
 To see your Linux server’s current runlevel,  
-- The first item displayed is the server’s previous runlevel. 
-- The second item displayed shows the server’s current runlevel, 
-which in this example is 
+
+- The first item displayed is the server’s previous runlevel.
+- The second item displayed shows the server’s current runlevel,
+which in this example is
 
 ```bash
 runlevel 
@@ -177,24 +142,26 @@ N 5
 
 ##### How does the server know which services to stop and which ones to start when a particular runlevel is chosen?
 
-
 ### Understanding systemd initialization  
-The systemd initialization daemon is the newer replacement for the SysVinit and the Upstart init daemons. This modern initialization daemon was introduced in Fedora 15 and RHEL 7, and it is still in use today. It is backward compatible with both SysVinit and Upstart. System initialization time is reduced by systemd because it can start services in a parallel manner
-#### Learning systemd basics
-With the SysVinit daemon, services are stopped and started based upon runlevels. 
-The systemd service is concerned with runlevels, but it implements them in a different way with what are called **target units**. 
 
-Although the main job of systemd is to start and stop services, it can manage other types of things referred to as **units**. 
+The systemd initialization daemon is the newer replacement for the SysVinit and the Upstart init daemons. This modern initialization daemon was introduced in Fedora 15 and RHEL 7, and it is still in use today. It is backward compatible with both SysVinit and Upstart. System initialization time is reduced by systemd because it can start services in a parallel manner
+
+#### Learning systemd basics
+
+With the SysVinit daemon, services are stopped and started based upon runlevels.
+The systemd service is concerned with runlevels, but it implements them in a different way with what are called **target units**.
+
+Although the main job of systemd is to start and stop services, it can manage other types of things referred to as **units**.
 
 > A unit is a group consisting of a name, type, and configuration file, and it is focused on a particular service or action.
 
 The two primary systemd units with which you need to be concerned for dealing with services are
-- service units 
-- target units. 
 
-> A **service unit** is for managing daemons on your Linux server. 
+- service units
+- target units.
+
+> A **service unit** is for managing daemons on your Linux server.
 > A **target unit** is simply a group of other units.
-
 
 ```bash
 systemctl list-units | grep .service
@@ -202,7 +169,8 @@ systemctl list-units | grep .service
 systemctl list-units | grep .target
 ```
 
-The Linux system unit configuration files are located in these directories: 
+The Linux system unit configuration files are located in these directories:
+
 - `/lib/systemd/system`
 - `/etc/systemd/system`  
 
@@ -212,10 +180,10 @@ systemctl list-unit-files --type=service
 systemctl list-unit-files --type=service
 ```
 
+Units Status:
 
-Units Status: 
-- **enabled** status means that the unit is currently enabled. 
-- **disabled** status means that the unit is currently disabled. 
+- **enabled** status means that the unit is currently enabled.
+- **disabled** status means that the unit is currently disabled.
 - **static** It stands for “statically enabled,” and it means that the unit is enabled by default and cannot be disabled, even by root.
 
 ```bash
@@ -244,52 +212,69 @@ WantedBy=multi-user.target
 ```
 
 this basic service unit configuration file has the following options:
-- ##### Description: 
+
+- ##### Description
+
   A free-form description (comment line) of the service.
-- ##### Documentation: 
+
+- ##### Documentation
+
   Lists man pages for the sshd daemon and configuration file.
-- ##### After: 
+
+- ##### After
+
   Configures ordering. In other words, it lists which units should be activated before this service is started.
-- ##### Environment File: 
+
+- ##### Environment File
+
   The service’s configuration files.
-- ##### ExecStart: 
+
+- ##### ExecStart
+
   The command used to start this service.
-- ##### ExecReload: 
+
+- ##### ExecReload
+
   The command used to reload this service.
-- ##### WantedBy: 
+
+- ##### WantedBy
+
   The target unit to which this service belongs.
 
 ##### WANTS & REQUIRES
-A target unit has both Wants and requirements, called Requires. 
 
-- A Wants means that all of the units listed are triggered to activate (start). If they fail or cannot be started, no problem—the target unit continues on its merry way. 
+A target unit has both Wants and requirements, called Requires.
+
+- A Wants means that all of the units listed are triggered to activate (start). If they fail or cannot be started, no problem—the target unit continues on its merry way.
 
 ```bash
 systemctl show --property "Wants" multi-user.target \
-	| fmt -10 | sed 's/Wants=//g' | sort
+ | fmt -10 | sed 's/Wants=//g' | sort
 ```
 
 - A Requires means that all of the units listed are triggered to activate (start). If they fail or cannot be started, the entire unit (group of units) is deactivated
 
 ```bash
 systemctl show --property "Requires" multi-user.target \
-	| fmt -10 | sed 's/Requires=//g' | sort
+ | fmt -10 | sed 's/Requires=//g' | sort
 ```
 
 > [!NOTE]
-> For the Linux server using systemd, At boot, systemd activates the `default.target` unit. This unit is aliased either to `multi-user.target` or `graphical.target`. 
-Thus, depending upon the alias set, the services targeted by the target unit are started. 
+> For the Linux server using systemd, At boot, systemd activates the `default.target` unit. This unit is aliased either to `multi-user.target` or `graphical.target`.
+Thus, depending upon the alias set, the services targeted by the target unit are started.
 
 #### Learning systemd's backward compatibility to SysVinit  
-The systemd daemon has maintained backward compatibility to the SysVinit daemon. This allows Linux distributions time to migrate slowly to systemd. 
 
-While runlevels are not truly part of systemd, the systemd infrastructure has been cre ated to provide compatibility with the concept of runlevels. 
+The systemd daemon has maintained backward compatibility to the SysVinit daemon. This allows Linux distributions time to migrate slowly to systemd.
 
-There are seven target unit configuration files specifically created for backward compatibility to SysVinit: 
-- runlevel0.target 
+While runlevels are not truly part of systemd, the systemd infrastructure has been cre ated to provide compatibility with the concept of runlevels.
+
+There are seven target unit configuration files specifically created for backward compatibility to SysVinit:
+
+- runlevel0.target
 - runlevel1.target
-- runlevel2.target 
-- runlevel3.target 
+- runlevel2.target
+- runlevel3.target
 - runlevel4.target
 - runlevel5.target
 - runlevel6.target
@@ -307,20 +292,23 @@ lrwxrwxrwx 1 root root 16 Oct 12 10:36 /lib/systemd/system/runlevel5.target -> g
 lrwxrwxrwx 1 root root 13 Oct 12 10:36 /lib/systemd/system/runlevel6.target -> reboot.target
 ```
 
-
 ## Checking the Status of Services  
+
 A **service** is a background function provided by a Linux system, such as SSH access, printing, or scheduled jobs.
 
 As a Linux administrator, you should be able to answer three questions:
+
 1. **Is the service configured to start automatically?**
 2. **Is the service running right now?**
 3. **How do I start, stop, restart, or reload it?**
 
 Linux uses different service-management commands depending on the initialization system:
+
 - **SysVinit:** `service`, `chkconfig`
 - **systemd:** `systemctl`
 
 #### Checking services for SysVinit systems  
+
 Use `chkconfig` to list services and their configured states across runlevels.
 
 ```bash
@@ -334,6 +322,7 @@ vncserver       0:off  1:off  2:off  3:off 4:off  5:off 6:off
 ```
 
 **How to interpret it:**
+
 - `on`: configured to start at that runlevel.
 - `off`: not configured to start at that runlevel.
 - Runlevels `0–6` represent different system operating states.
@@ -402,7 +391,6 @@ Tasks: 1
 Memory: 3.1M
 ```
 
-
 ## Stopping and Starting Services  
 
 ### Starting and Stopping Services with SysVinit
@@ -440,6 +428,7 @@ cupsd (pid 6860) is running...
 ```
 
 ##### Restart a Service
+
 Restarting means stopping the service and starting it again.
 
 ```bash
@@ -618,7 +607,6 @@ sshd.service - OpenSSH server daemon
            └─1675 /usr/sbin/sshd -D ...
 ```
 
-
 - A successful reload leaves the service running. The output includes an `ExecReload` entry indicating that the reload operation was executed.
 - Not every service supports reload.
 - Reloading can be preferable on a busy server because it can avoid interrupting the service and aborting pending operations, as described in the chapter.
@@ -630,11 +618,11 @@ sshd.service - OpenSSH server daemon
 A persistent service is configured to start automatically when the system boots.
 
 There is an important difference between:
+
 - **Starting a service:** runs it now.
 - **Enabling a service:** configures it to start automatically.
 - **Stopping a service:** stops it now.
 - **Disabling a service:** removes its automatic startup configuration.
-    
 
 For example, a service can be `inactive (dead)` but `enabled`. It is stopped now, yet configured to start at boot.
 
@@ -753,7 +741,7 @@ The `disable` operation does not change the unit's `static` state.
 
 ### `disable` vs `mask`
 
-Disabling a service does not necessarily prevent another service from starting it as a dependency. 
+Disabling a service does not necessarily prevent another service from starting it as a dependency.
 
 To prevent the service from being started through normal systemd activation:
 
@@ -770,8 +758,6 @@ ln -s '/dev/null' '/etc/systemd/system/NetworkManager.service'
 
 **Use masking carefully:** a service may be required by networking or other system components.
 
-
-
 ## Configuring a Default Runlevel or Target Unit
 
 ### What Is a Default Runlevel or Target?
@@ -779,6 +765,7 @@ ln -s '/dev/null' '/etc/systemd/system/NetworkManager.service'
 A persistent service is an individual service configured to start at boot.
 
 A **default runlevel or target** determines a group of services and system functions activated during startup.
+
 - **SysVinit:** uses runlevels.
 - **systemd:** uses target units.
 
@@ -790,6 +777,7 @@ The source chapter provides these systemd target mappings:
 |`graphical.target`|`runlevel5.target`|
 
 ### SysVinit: Configure the Default Runlevel
+
 In SysVinit, the default runlevel is configured in `/etc/inittab`.
 Inspect the file:
 
@@ -874,7 +862,9 @@ The change affects the target used at the next boot. It does not, by itself, imm
 Sometimes a server needs a service that does not already exist, or an existing service needs customization. The procedure depends on whether the system uses SysVinit or systemd.
 
 ### Adding a Service to SysVinit
+
 There are four steps:
+
 1. Create or customize a service script.
 2. Place the script in `/etc/rc.d/init.d`.
 3. Set its permissions.
@@ -929,11 +919,12 @@ The example header is:
 ```
 
 It defines:
+
 - `2345`: runlevels where the service is configured to start.
 - `25`: startup order.
 - `10`: shutdown order.
 
-The startup number helps determine where the script appears relative to other startup scripts. 
+The startup number helps determine where the script appears relative to other startup scripts.
 A smaller number generally me
 ans earlier startup; a larger number means later startup.
 
@@ -1011,6 +1002,7 @@ Once registered, the service can be started or stopped manually using `service`,
 ### Adding a Service to systemd
 
 There are three main steps:
+
 1. Create a service unit file.
 2. Place the file in the correct systemd directory.
 3. Configure its relationship to a target if it should start automatically with that target.
@@ -1029,15 +1021,16 @@ ExecStart=/usr/bin/My_New_Service
 ```
 
 The essential fields in this example are:
+
 - `[Unit]`: general information about the unit.
 - `Description`: human-readable description.
 - `[Service]`: service-specific configuration.
 - `ExecStart`: command used to start the service.
-    
 
 `/usr/bin/My_New_Service` is a placeholder path in the example. For a real service, the executable must exist and be appropriate for the service.
 
 For additional configuration options, consult the systemd service manual:
+
 ```
 # man systemd.service
 ```
@@ -1140,4 +1133,4 @@ If the unit fails, inspect its status and logs to investigate the cause.
 ## References
 
 - **Linux Bible - Christopher Negus (Tenth Edition)**
-	- **CHAPTER 15: Starting and Stopping Services**
+  - **CHAPTER 15: Starting and Stopping Services**
