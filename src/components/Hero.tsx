@@ -87,7 +87,7 @@ export function Hero() {
 
           {/* Title */}
           <p className="text-lg md:text-xl text-accent font-medium mb-4">
-            Security Analyst | Infrastructure & DevOps Enthusiast
+            Computer Engineer
           </p>
 
           {/* Introduction */}
